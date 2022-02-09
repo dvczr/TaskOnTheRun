@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+
+import MainStackNavigator from "./src/Navigation/MainStackNavigator";
+
+import { ArrayContext } from "./src/Context/ArrayContext";
 
 export default function App() {
+  const [array, updateArray] = useState([]);
+  const [counter, setCounter] = useState(1);
+  const badgeCounter = array.length != 0 ? array.length : null;
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ArrayContext.Provider
+      value={{ array, updateArray, counter, setCounter, badgeCounter }}
+    >
+      <NavigationContainer>
+        <MainStackNavigator />
+      </NavigationContainer>
+    </ArrayContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
